@@ -1,0 +1,283 @@
+@font-face {
+    font-family: 'Shockwave';
+    src: url('ShockwaveRegular.woff2') format('woff2'),
+        url('ShockwaveRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+
+}
+
+ @font-face {
+    font-family: 'Stretch Pro';
+    src: url('StretchProRegular.woff2') format('woff2'),
+        url('StretchProRegular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    
+}
+/* Estilos para pantallas más pequeñas, como dispositivos móviles */
+@media (max-width: 768px) {
+    /* Ajusta los estilos del encabezado para pantallas más pequeñas */
+    header {
+        height: 80px; /* Reducir la altura del encabezado */
+    }
+
+    /* Ajusta el tamaño de fuente del encabezado "Sphere" para pantallas más pequeñas */
+    .Sphere-header {
+        font-size: 16px; /* Tamaño de fuente más pequeño */
+    }
+
+    /* Ajusta los estilos para el logotipo Pluxum para pantallas más pequeñas */
+    .Logo-pluxum {
+        max-width: 30%; /* Reduce el tamaño máximo de la imagen */
+        margin-right: 10px; /* Reduce el espacio a la derecha para la imagen */
+    }
+
+    /* Ajusta los estilos para los formularios para pantallas más pequeñas */
+    .formulario-login, .formulario-registro {
+        width: 50%; /* Ancho del 100% para ocupar el ancho completo de la pantalla */
+        height: auto; /* Altura automática para adaptarse al contenido */
+        margin: 10px 0; /* Margen arriba y abajo, elimina el margen en los lados */
+    }
+}
+
+
+
+
+body {
+    margin: 0; /* Elimina el margen predeterminado del cuerpo */
+    padding: 0; /* Elimina el relleno predeterminado del cuerpo */
+    background-color: #ffffff; /* Fondo negro para el cuerpo */
+}
+
+header {
+    background-color: rgba(0, 0, 0, 1); /* Fondo negro en rgba */
+    padding-left: 10px; /* Espacio adicional a la izquierda para mover el contenido a la derecha */
+    padding-top: 10px; /* Espacio adicional en la parte superior */
+    padding-bottom: 10px; /* Espacio adicional en la parte inferior */
+    margin: 0; /* Elimina el margen del encabezado */
+    width: 100%; /* Ancho al 100% */
+    box-sizing: border-box; /* Asegura que el ancho incluya el relleno y el borde */
+    height: 115px; /* Altura del encabezado */
+}
+
+
+/* Estilos para el encabezado "Sphere" */
+.Sphere-header {
+    font-family: 'Shockwave', sans-serif;
+    font-size: 74px; /* Tamaño de fuente personalizado */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 50%, rgba(255, 20, 147, 1) 50%);
+    background-clip: text; /* Propiedad estándar */
+    -webkit-background-clip: text; /* Propiedad con prefijo para compatibilidad con WebKit */
+    color: transparent;
+    display: inline-block; /* Permite que el texto ocupe solo el espacio necesario */
+    vertical-align: middle; /* Alinea verticalmente en el medio */
+    float: left; /* Alinea el texto a la izquierda */
+    margin-left: 30px; /* Espaciado a la izquierda para el texto */
+}
+
+/* Estilos para el logotipo Pluxum */
+.Logo-pluxum {
+    max-width: 50%; /* Tamaño máximo de la imagen */
+    height: auto; /* Ajusta la altura automáticamente */
+    display: inline-block; /* Permite que la imagen ocupe solo el espacio necesario */
+    vertical-align: middle; /* Alinea verticalmente en el medio */
+    float: right; /* Alinea la imagen a la derecha */
+    margin-right: 30px; /* Espaciado a la derecha para la imagen */
+}
+
+/* El lindo formulario de login */
+
+/* Estilos para el contenedor */
+.contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid white;
+    padding: 20px;
+}
+
+/* Estilos para el formulario de inicio de sesión */
+.formulario-login {
+    font-family: 'Stretch Pro', sans-serif;
+    width: 100%; /* Ancho al 100% para ocupar todo el espacio disponible */
+    max-width: 500px; /* Ancho máximo de 500px para evitar que se estire demasiado en pantallas grandes */
+    height: 450px;
+    margin: 10px; /* Margen de 10px en todos los lados para separación */
+    padding: 20px;
+    background-color: rgba(0, 0, 1);
+    border-radius: 10px;
+}
+/* Estilos para el título */
+.formulario-login h2 {
+    font-family: 'Shockwave', sans-serif;
+    text-align: center;
+    font-size: 34px; /* Tamaño de fuente más grande para el título */
+    color: rgb(255, 9, 140); /* Color del título */
+    margin-bottom: 40x; /* Espacio inferior para separación del contenido */
+}
+#error_message {
+    color: rgb(253, 253, 253);
+}
+
+/* Estilos para el contenido del formulario */
+#formulario-login form {
+    padding: 10px;
+}
+
+/* Estilos para el caja de texto de correo electrónico */
+#input-correo {
+    width: calc(100% - 20px); /* El ancho es 100% menos el doble del margen (10px en cada lado) */
+    padding: 10px;
+    margin-bottom: 10px; /* Margen de 10px en la parte inferior para separación */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilos para el caja de texto de contraseña */
+#input-contrasena {
+    width: calc(50% - 5px); /* El ancho es el 50% del ancho disponible menos 5px de separación */
+    height: 50%; /* La altura es el 50% del alto del formulario */
+    padding: 10px;
+    margin-bottom: 10px; /* Margen de 10px en la parte inferior para separación */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+/* Estilos para el botón */
+#formulario-login input[type="submit"] {
+    width: 100%; /* Ancho del 100% del espacio disponible */
+    padding: 15px; /* Espacio interno para hacer el botón más grande */
+    background-color: rgb(255, 9, 140); /* Cambia el color de fondo a rgb(255, 9, 140) */
+    border: none; /* Elimina el borde del botón */
+    color: white; /* Color del texto en blanco */
+    border-radius: 5px; /* Borde redondeado de 5px */
+    font-size: 16px;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+/* Cambia el color de fondo del botón cuando pasas el mouse sobre él */
+#formulario-login input[type="submit"]:hover {
+    background-color: black; /* Cambia el color de fondo a negro */
+    color: white; /* Cambia el color del texto a blanco para que sea visible sobre el fondo negro */
+    border: #ccc 5px;
+}
+#alternar-telefono {
+    color: white; /* Cambiar el color del texto a blanco */
+}
+
+
+
+
+
+/* Estilos para el formulario de registro */
+.formulario-registro {
+    font-family: 'Stretch Pro', sans-serif; /* Establecer la tipografía 'Stretch Pro' */
+    width: 500px; /* Ancho fijo de 500px */
+    height: 450px; /* Altura fija de 450px */
+    margin: 10px 10px 0 10px; /* Margen de 10px arriba, 10px en los lados y 0 en la parte inferior para separación y aspecto */
+    padding: 20px; /* Espacio interno de 20px para el formulario */
+    background-color: rgba(255, 9, 140, 0.781);  /* Color de fondo para el formulario de registro */
+    border-radius: 10px; /* Borde redondeado de 10px */
+}
+
+/* Estilos para el contenido del formulario de registro */
+#formulario-registro form {
+    padding: 10px; /* Añadir espacio interno al formulario */
+}
+
+/* Estilos para el contenedor de registro */
+#formulario-registro {
+    width: 500px; /* Ancho fijo de 500px */
+    height: 450px; /* Altura fija de 450px */
+    margin: 10px auto; /* Margen superior e inferior de 10px, margen izquierdo y derecho automáticos para centrar */
+    padding: 20px; /* Espacio interno de 20px para el formulario */
+    background-color: rgba(255, 9, 140, 0.781); /* Color de fondo para el formulario de registro */
+    border-radius: 10px; /* Borde redondeado de 10px */
+}
+
+/* Estilos para las etiquetas de definición */
+#formulario-registro label {
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Texto en negrita */
+}
+
+/* Estilos para los campos de texto */
+#formulario-registro .campo {
+    margin-bottom: 15px; /* Agregar espacio de 15px debajo de cada campo */
+    display: flex; /* Utiliza flexbox para alinear los elementos internos */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos internos */
+}
+
+#formulario-registro .campo label {
+    width: 45%; /* Ancho del 45% para la etiqueta */
+    display: block; /* Para que las etiquetas aparezcan una debajo de la otra */
+}
+
+
+#formulario-registro .campo input[type="text"],
+#formulario-registro .campo input[type="email"],
+#formulario-registro .campo input[type="password"],
+#formulario-registro .campo select {
+    width: 100%; /* Ocupar todo el ancho disponible en el formulario */
+    padding: 10px; /* Añadir espacio interno para mejorar el aspecto y la legibilidad */
+    border: 1px solid #ccc; /* Añadir un borde gris */
+    border-radius: 5px; /* Borde redondeado */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+/* Estilo para el select (campo de país) */
+.campo select {
+    width: 15%; /* Ancho del 35% para el campo de país */
+    padding: 10px; /* Espacio interno */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 5px; /* Borde redondeado */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-right: 10px; /* Espacio entre el select y el input */
+}
+
+#formulario-registro .campo .numero-telefono {
+    width: 60%; /* Ancho del 60% para la caja de número de teléfono */
+}
+
+
+#formulario-registro .campo input[type="date"] {
+    width: 45%; /* Ancho del 50% para la caja de texto o select */
+    padding: 10px; /* Añadir espacio interno para mejorar el aspecto y la legibilidad */
+    border: 1px solid #ccc; /* Añadir un borde gris */
+    border-radius: 5px; /* Borde redondeado */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+/* Estilos para el botón */
+#formulario-registro input[type="submit"] {
+    width: 100%; /* Ancho del 100% del espacio disponible */
+    padding: 15px; /* Espacio interno para hacer el botón más grande */
+    background-color: rgb(0, 0, 0); /* Cambia el color de fondo a rgb(255, 9, 140) */
+    border: none; /* Elimina el borde del botón */
+    color: white; /* Color del texto en blanco */
+    border-radius: 5px; /* Borde redondeado de 5px */
+    font-size: 16px;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+/* Cambia el color de fondo del botón cuando pasas el mouse sobre él */
+#formulario-registro input[type="submit"]:hover {
+    background-color: rgba(255, 9, 140, 0.781); /* Cambia el color de fondo a negro */
+    color: white; /* Cambia el color del texto a blanco para que sea visible sobre el fondo negro */
+    border: #ccc 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
