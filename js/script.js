@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function() {
 const nav = document.querySelector("#nav");
 const abrir = document.querySelector("#abrir");
 const cerrar = document.querySelector("#cerrar");
@@ -57,14 +58,49 @@ function informacionPersonal() {
         console.log(xhr.readyState); // Para verificar el estado de la solicitud
         console.log(xhr.status); // Para verificar el código de estado de la respuesta
         if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+            document.querySelector('.content-p').innerHTML = '';
             document.querySelector('.content-p').innerHTML = xhr.responseText;
         }
     };
     xhr.send();
 }
+document.querySelector('#info-per').addEventListener('click', informacionPersonal);
 
-document.querySelector('#perfil-btn').addEventListener('click', informacionPersonal);
 
+// SCRIPTS PARA INFORMACION FINANCIERA
+
+function informacionFinanciera() {
+    console.log("Cargar información financiera llamado"); // Mensaje de depuración
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "informacion_financiera.php", true);
+    xhr.onreadystatechange = function() {
+        console.log(xhr.readyState); // Para verificar el estado de la solicitud
+        console.log(xhr.status); // Para verificar el código de estado de la respuesta
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+            document.querySelector('.content-p').innerHTML = '';
+            document.querySelector('.content-p').innerHTML = xhr.responseText;
+        }
+    };
+    xhr.send();
+}
+document.querySelector('#info-finan').addEventListener('click', informacionFinanciera);
+
+// SCRIPTS PARA TRANSFERIR USUARIO
+
+function transferirUsuario() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "transfer_user.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // La solicitud se completó y la función de transferir usuario se ejecutó en el servidor
+            console.log("Usuario transferido exitosamente.");
+            // Puedes hacer algo más aquí si es necesario
+        }
+    };
+    xhr.send();
+}
 
 
 
@@ -263,7 +299,18 @@ function llenarGenero() {
 
     }
 
+    
+// EDITAR DATOS FINANCIEROS
+
+
+    function habilitarDatos(){
+
+    }
+
+    function guardarDatos (){
+
+    }
+
 
     
-    
-
+});

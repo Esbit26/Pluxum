@@ -62,7 +62,7 @@
 
     
 <section id="informacion-personal">
-            <h2 class="center-text">Información Personal</h2>
+            <h2 class="center-text">Datos Personales</h2>
             <div class="info-grid">
                 <div class="info-item">
                     <label for="nombre">Nombre:</label>

@@ -16,8 +16,8 @@
         <div class="sidebar">
             <ul>
                 <li><a href="#" id="info-per" onclick="informacionPersonal()">Datos Personales</a></li>
-                <li><a href="#informacion-financiera">Información Financiera</a></li>
-                <li><a href="#verificacion-kyc">Verificación KYC</a></li>
+                <li><a href="#" id="info-finan" onclick="informacionFinanciera()">Información Financiera</a></li>
+                <li><a href="#" id="verificar-kyc" onclick="">Verificación KYC</a></li>
             </ul>
         </div>
         <!-- CAMPOS DE PERFIL --> 

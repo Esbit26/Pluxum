@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $params[] = $nuevoApellido;
         }
 
-        if (!empty($nuevoCorreo)) {
+        if (!empty($nuevoCorreo) && filter_var($nuevoCorreo, FILTER_VALIDATE_EMAIL)) {
             $sql .= "user_emailsp = ?, ";
             $types .= "s";
             $params[] = $nuevoCorreo;
