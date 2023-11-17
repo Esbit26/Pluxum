@@ -21,22 +21,24 @@ if (!isset($_SESSION['user_idunsp'])) {
 
     // Verificar si se encontró el usuario
     if ($resultado->num_rows > 0) {
-        // Transferir el usuario a la tabla users_verified
+        // Obtener el valor de las columnas y otros datos del usuario
         $usuario = $resultado->fetch_assoc();
+        $user_idunsp = $usuario['user_idunsp'];
         $nombre = $usuario['user_namesp'];
         $apellido = $usuario['user_lastnsp'];
-        $correo = $usuario['user_emailsp'];
         $fechanac = $usuario['user_birthsp'];
+        $correo = $usuario['user_emailsp'];
+        $contrasena = $usuario['user_passsp']; // Contraseña ya encriptada
         $pais = $usuario['user_countrysp'];
-        $genero = $usuario['user_gensp'];
         $telefono = $usuario['user_phonesp'];
+        $genero = $usuario['user_gensp'];
         $intentos_fallidos = $usuario['intentos_fallidos'];
 
         // Insertar el usuario en la tabla users_verified
-        $insertar = "INSERT INTO users_verified (user_namesp, user_lastnsp, user_emailsp, user_birthsp, user_countrysp, user_gensp, user_phonesp, intentos_fallidos) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertar = "INSERT INTO users_verified (user_idunsp, user_namesp, user_lastnsp, user_birthsp, user_emailsp, user_passsp, user_countrysp, user_phonesp, user_gensp, intentos_fallidos) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt_insert = $conn->prepare($insertar);
-        $stmt_insert->bind_param("sssssssi", $nombre, $apellido, $correo, $fechanac, $pais, $genero, $telefono, $intentos_fallidos);
+        $stmt_insert->bind_param("issssssssi", $user_idunsp, $nombre, $apellido, $fechanac, $correo, $contrasena, $pais, $telefono, $genero, $intentos_fallidos);
 
         if ($stmt_insert->execute()) {
             // Eliminar el usuario de la tabla users_not_verified
@@ -47,6 +49,8 @@ if (!isset($_SESSION['user_idunsp'])) {
 
             // Enviar mensaje de éxito a la consola del navegador
             echo '<script>console.log("Usuario transferido exitosamente.");</script>';
+            echo '<script>window.location.href = "user_panel.php";</script>';
+
         } else {
             // Enviar mensaje de error a la consola del navegador
             echo '<script>console.log("Error al transferir el usuario.");</script>';

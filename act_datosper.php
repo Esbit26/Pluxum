@@ -16,68 +16,145 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($user_idunsp)) {
         echo "Error: Usuario no válido.";
     } else {
-        // Preparar la consulta SQL y los tipos de datos para los campos que no están vacíos
-        $sql = "UPDATE users_not_verified SET ";
-        $types = "";
-        $params = array();
 
-        if (!empty($nuevoNombre)) {
-            $sql .= "user_namesp = ?, ";
-            $types .= "s";
-            $params[] = $nuevoNombre;
+        $sql = "SELECT * FROM users_not_verified WHERE user_idunsp = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_idunsp);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        if ($resultado->num_rows > 0) {
+            // Usuario encontrado en users_not_verified
+            // Preparar y ejecutar la consulta SQL para actualizar en users_not_verified
+            $sql = "UPDATE users_not_verified SET ";
+            $types = "";
+            $params = array();
+
+            if (!empty($nuevoNombre)) {
+                $sql.= "user_namesp = ?, ";
+                $types .= "s";
+                $params[] = $nuevoNombre;
+            }
+
+            // Repite el proceso para otros campos según sea necesario
+    
+            if (!empty($nuevoApellido)) {
+                $sql .= "user_lastnsp = ?, ";
+                $types .= "s";
+                $params[] = $nuevoApellido;
+            }
+    
+            if (!empty($nuevoCorreo) && filter_var($nuevoCorreo, FILTER_VALIDATE_EMAIL)) {
+                $sql .= "user_emailsp = ?, ";
+                $types .= "s";
+                $params[] = $nuevoCorreo;
+            }
+    
+            if (!empty($nuevoFecha)) {
+                $sql .= "user_birthsp = ?, ";
+                $types .= "s";
+                $params[] = $nuevoFecha;
+            }
+    
+            if (!empty($nuevoPais)) {
+                $sql .= "user_countrysp = ?, ";
+                $types .= "s";
+                $params[] = $nuevoPais;
+            }
+    
+            if (!empty($nuevoGenero)) {
+                $sql .= "user_gensp = ?, ";
+                $types .= "s";
+                $params[] = $nuevoGenero;
+            }
+    
+            if (!empty($nuevoTelefono) && ctype_digit($nuevoTelefono)) {
+                $sql .= "user_phonesp = ?, ";
+                $types .= "s";
+                $params[] = $nuevoTelefono;
+            }
+    
+            // Si hay una nueva contraseña, encriptarla y agregarla a la consulta
+            if (!empty($nuevoPassword)) {
+                $hashNuevaPassword = password_hash($nuevoPassword, PASSWORD_DEFAULT);
+                $sql .= "user_passsp = ?, ";
+                $types .= "s";
+                $params[] = $hashNuevaPassword;
+            }
+
+            
         }
+        else {
+            $sql = "SELECT * FROM users_verified WHERE user_idunsp = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $user_idunsp);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            if ($resultado->num_rows > 0) {
+                // Usuario encontrado en users_verified
+                // Preparar y ejecutar la consulta SQL para actualizar en users_verified
+                $sql = "UPDATE users_verified SET ";
+                $types = "";
+                $params = array();
+                if (!empty($nuevoNombre)) {
+                    $sql .= "user_namesp = ?, ";
+                    $types .= "s";
+                    $params[] = $nuevoNombre;
+                }
+        
+                if (!empty($nuevoApellido)) {
+                    $sql .= "user_lastnsp = ?, ";
+                    $types .= "s";
+                    $params[] = $nuevoApellido;
+                }
+        
+                if (!empty($nuevoCorreo) && filter_var($nuevoCorreo, FILTER_VALIDATE_EMAIL)) {
+                    $sql .= "user_emailsp = ?, ";
+                    $types .= "s";
+                    $params[] = $nuevoCorreo;
+                }
+        
+                if (!empty($nuevoFecha)) {
+                    $sql .= "user_birthsp = ?, ";
+                    $types .= "s";
+                    $params[] = $nuevoFecha;
+                }
+        
+                if (!empty($nuevoPais)) {
+                    $sql .= "user_countrysp = ?, ";
+                    $types .= "s";
+                    $params[] = $nuevoPais;
+                }
+        
+                if (!empty($nuevoGenero)) {
+                    $sql .= "user_gensp = ?, ";
+                    $types .= "s";
+                    $params[] = $nuevoGenero;
+                }
+        
+                if (!empty($nuevoTelefono) && ctype_digit($nuevoTelefono)) {
+                    $sql .= "user_phonesp = ?, ";
+                    $types .= "s";
+                    $params[] = $nuevoTelefono;
+                }
+        
+                // Si hay una nueva contraseña, encriptarla y agregarla a la consulta
+                if (!empty($nuevoPassword)) {
+                    $hashNuevaPassword = password_hash($nuevoPassword, PASSWORD_DEFAULT);
+                    $sql .= "user_passsp = ?, ";
+                    $types .= "s";
+                    $params[] = $hashNuevaPassword;
+                }
+        
+                // Eliminar la coma y el espacio final de la consulta SQL
+                $sql = rtrim($sql, ", ");
+        
+                // Agregar la condición WHERE para el usuario específico
+                $sql .= " WHERE user_idunsp = ?";
+                $types .= "i";
+                $params[] = $user_idunsp;
+            }
 
-        if (!empty($nuevoApellido)) {
-            $sql .= "user_lastnsp = ?, ";
-            $types .= "s";
-            $params[] = $nuevoApellido;
-        }
-
-        if (!empty($nuevoCorreo) && filter_var($nuevoCorreo, FILTER_VALIDATE_EMAIL)) {
-            $sql .= "user_emailsp = ?, ";
-            $types .= "s";
-            $params[] = $nuevoCorreo;
-        }
-
-        if (!empty($nuevoFecha)) {
-            $sql .= "user_birthsp = ?, ";
-            $types .= "s";
-            $params[] = $nuevoFecha;
-        }
-
-        if (!empty($nuevoPais)) {
-            $sql .= "user_countrysp = ?, ";
-            $types .= "s";
-            $params[] = $nuevoPais;
-        }
-
-        if (!empty($nuevoGenero)) {
-            $sql .= "user_gensp = ?, ";
-            $types .= "s";
-            $params[] = $nuevoGenero;
-        }
-
-        if (!empty($nuevoTelefono) && ctype_digit($nuevoTelefono)) {
-            $sql .= "user_phonesp = ?, ";
-            $types .= "s";
-            $params[] = $nuevoTelefono;
-        }
-
-        // Si hay una nueva contraseña, encriptarla y agregarla a la consulta
-        if (!empty($nuevoPassword)) {
-            $hashNuevaPassword = password_hash($nuevoPassword, PASSWORD_DEFAULT);
-            $sql .= "user_passsp = ?, ";
-            $types .= "s";
-            $params[] = $hashNuevaPassword;
-        }
-
-        // Eliminar la coma y el espacio final de la consulta SQL
-        $sql = rtrim($sql, ", ");
-
-        // Agregar la condición WHERE para el usuario específico
-        $sql .= " WHERE user_idunsp = ?";
-        $types .= "i";
-        $params[] = $user_idunsp;
 
         // Preparar y ejecutar la consulta
         if ($stmt = $conn->prepare($sql)) {
@@ -89,11 +166,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 echo "Error al ejecutar la consulta: " . $stmt->error;
             }
-            $stmt->close();
-        } else {
-            echo "Error en la preparación de la consulta: " . $conn->error;
+            
+
         }
+        $stmt->close();
     }
+       
+        } 
+    
 } else {
     echo "Solicitud no válida.";
 }

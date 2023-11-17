@@ -12,49 +12,67 @@
 
 <body>
     <!-- INICIO CONEXION -->
-<?php
-    session_start();
-    include("db_connection.php");
+    <?php
+session_start();
+include("db_connection.php");
 
-    // Verificar la sesión del usuario (código de autenticación)
-    if (!isset($_SESSION['user_idunsp'])) {
-        echo "Usuario no encontrado";
-    } else {
-        $user_idunsp = $_SESSION['user_idunsp'];
+// Verificar la sesión del usuario (código de autenticación)
+if (!isset($_SESSION['user_idunsp'])) {
+    echo "Usuario no encontrado";
+} else {
+    $user_idunsp = $_SESSION['user_idunsp'];
 
-        // Consultar en la tabla users_not_verified
-        $sql = "SELECT user_namesp, user_lastnsp, user_birthsp, user_emailsp, user_passsp, user_countrysp, user_gensp, user_phonesp FROM users_not_verified WHERE user_idunsp = ?";
+    // Consultar en la tabla users_not_verified
+    $sql = "SELECT user_namesp, user_lastnsp, user_birthsp, user_emailsp, user_passsp, user_countrysp, user_gensp, user_phonesp FROM users_not_verified WHERE user_idunsp = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_idunsp);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
-        // Preparar la consulta
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $user_idunsp); // "i" indica un valor entero
+    // Si no se encuentra en users_not_verified, buscar en users_verified
+    if ($resultado->num_rows <= 0) {
+        $sql_verified = "SELECT user_namesp, user_lastnsp, user_birthsp, user_emailsp, user_passsp, user_countrysp, user_gensp, user_phonesp FROM users_verified WHERE user_idunsp = ?";
+        $stmt_verified = $conn->prepare($sql_verified);
+        $stmt_verified->bind_param("i", $user_idunsp);
+        $stmt_verified->execute();
+        $resultado_verified = $stmt_verified->get_result();
 
-        // Ejecutar la consulta
-        $stmt->execute();
-
-        // Obtener resultados
-        $resultado = $stmt->get_result();
-
-        // Procesar los resultados y mostrar el perfil del usuario
-        if ($resultado->num_rows > 0) {
-            $row = $resultado->fetch_assoc();
-            $nombre = $row["user_namesp"];
-            $correo = $row["user_emailsp"];
-            $apellido = $row["user_lastnsp"];
-            $fechanac = $row ["user_birthsp"];
-            $pais = $row ["user_countrysp"];
-            $genero = $row ["user_gensp"];
-            $telefono = $row ["user_phonesp"];
+        if ($resultado_verified->num_rows > 0) {
+            $row_verified = $resultado_verified->fetch_assoc();
+            // Asignar valores encontrados de users_verified
+            $nombre = $row_verified["user_namesp"];
+            $correo = $row_verified["user_emailsp"];
+            $apellido = $row_verified["user_lastnsp"];
+            $fechanac = $row_verified["user_birthsp"];
+            $pais = $row_verified["user_countrysp"];
+            $genero = $row_verified["user_gensp"];
+            $telefono = $row_verified["user_phonesp"];
             // También puedes obtener otros campos aquí si es necesario
         } else {
-            echo "Usuario no encontrado";
+            echo "Usuario no encontrado en ninguna tabla";
+            exit(); // Terminar la ejecución del script si no se encuentra en ninguna tabla
         }
-
-        // Cerrar la conexión
-        $stmt->close();
-        $conn->close();
+        
+        // Cerrar la conexión y las declaraciones
+        $stmt_verified->close();
+    } else {
+        // Usuario encontrado en users_not_verified
+        $row = $resultado->fetch_assoc();
+        $nombre = $row["user_namesp"];
+        $correo = $row["user_emailsp"];
+        $apellido = $row["user_lastnsp"];
+        $fechanac = $row["user_birthsp"];
+        $pais = $row["user_countrysp"];
+        $genero = $row["user_gensp"];
+        $telefono = $row["user_phonesp"];
+        // También puedes obtener otros campos aquí si es necesario
     }
-    ?>
+
+    // Cerrar la conexión y las declaraciones
+    $stmt->close();
+    $conn->close();
+}
+?>
     <!-- FIN CONEXION -->
 
 

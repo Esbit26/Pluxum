@@ -1,0 +1,34 @@
+<html>
+    <body>
+        
+    <script>
+        function pedirCalificacion(){
+            var calificacion;
+            calificacion = prompt("Cual es su calificacion: ");
+            while (calificacion>100){
+                calificacion = prompt("La calificacion debe ser menor a 100, vuelve a ingresarla: ");
+            }
+            return calificacion;
+        }
+ 
+        function calcular (calificacion){
+            var resultado;
+            if (calificacion>=60){
+                resultado = "Aprobado, felicitaciones!"
+            }
+            else if (calificacion>=50 && calificacion<60){
+                resultado = "Estuviste cerca"
+            }
+            else{
+                resultado = "Reprobado, vuelve a intentarlo"
+            }
+
+            return resultado;
+        }
+        var calificacionFinal = pedirCalificacion(calificacion);
+        var resultadoFinal = calcular(resultado);
+        console.log ("Su calificacion final fue de: "+ calificacionFinal + "y su resultado obtenido fue: " + resultadoFinal);
+
+    </script>
+    </body>
+</html>

@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
 const nav = document.querySelector("#nav");
 const abrir = document.querySelector("#abrir");
 const cerrar = document.querySelector("#cerrar");
@@ -21,7 +20,6 @@ function cerrarSesion() {
             // La solicitud se completó y la función de cerrar sesión se ejecutó en el servidor
             console.log("Sesión cerrada exitosamente.");
             window.location.href = " /wordpress/wp-content/themes/zero/index.php";
-            // Puedes hacer algo más aquí si es necesario
         }
     };
     xhr.send();
@@ -31,13 +29,12 @@ function cerrarSesion() {
 // CARGAR PERFIL
 
 function cargarPerfil() {
-    console.log("Cargar perfil llamado"); // Para verificar si la función se está llamando
+    console.log("Cargar perfil llamado");
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "perfil.php", true);
     xhr.onreadystatechange = function() {
-        console.log(xhr.readyState); // Para verificar el estado de la solicitud
-        console.log(xhr.status); // Para verificar el código de estado de la respuesta
         if (xhr.readyState == 4 && xhr.status == 200) {
+            document.querySelector('.content').innerHTML = '';
             document.querySelector('.content').innerHTML = xhr.responseText;
         }
     };
@@ -51,15 +48,16 @@ document.querySelector('#perfil-btn').addEventListener('click', cargarPerfil);
 
 // SCRIPTS PARA PERFIL
 function informacionPersonal() {
-    console.log("Cargar perfil llamado"); // Para verificar si la función se está llamando
+    console.log("Cargar perfil llamado");
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "informacion_personal.php", true);
     xhr.onreadystatechange = function() {
-        console.log(xhr.readyState); // Para verificar el estado de la solicitud
-        console.log(xhr.status); // Para verificar el código de estado de la respuesta
+        console.log(xhr.readyState);
+        console.log(xhr.status);
         if (xhr.readyState == 4 && xhr.status == 200) {
             console.log(xhr.responseText);
             document.querySelector('.content-p').innerHTML = '';
+
             document.querySelector('.content-p').innerHTML = xhr.responseText;
         }
     };
@@ -71,16 +69,17 @@ document.querySelector('#info-per').addEventListener('click', informacionPersona
 // SCRIPTS PARA INFORMACION FINANCIERA
 
 function informacionFinanciera() {
-    console.log("Cargar información financiera llamado"); // Mensaje de depuración
+console.log("Cargar información financiera llamado");
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "informacion_financiera.php", true);
     xhr.onreadystatechange = function() {
-        console.log(xhr.readyState); // Para verificar el estado de la solicitud
+console.log(xhr.readyState); // Para verificar el estado de la solicitud
         console.log(xhr.status); // Para verificar el código de estado de la respuesta
         if (xhr.readyState == 4 && xhr.status == 200) {
             console.log(xhr.responseText);
             document.querySelector('.content-p').innerHTML = '';
-            document.querySelector('.content-p').innerHTML = xhr.responseText;
+
+                document.querySelector('.content-p').innerHTML = xhr.responseText;
         }
     };
     xhr.send();
@@ -295,7 +294,7 @@ function llenarGenero() {
                 editarBtn.style.display = 'block';
             }
         };
-        xhr.send('nuevoNombre=' + nuevoNombre + '&nuevoApellido=' + nuevoApellido + '&nuevoCorreo=' + nuevoCorreo + '&nuevoFecha=' + nuevoFecha + '&nuevoPais=' + nuevoPais + '&nuevoGenero=' + nuevoGenero + '&nuevoTelefono=' + nuevoTelefono ); // Concatenar ambos parámetros en una sola cadena
+        xhr.send('nuevoNombre=' + nuevoNombre + '&nuevoApellido=' + nuevoApellido + '&nuevoCorreo=' + nuevoCorreo + '&nuevoFecha=' + nuevoFecha + '&nuevoPais=' + nuevoPais + '&nuevoGenero=' + nuevoGenero + '&nuevoTelefono=' + nuevoTelefono +'&nuevoPassword=' + nuevoPassword ); // Concatenar ambos parámetros en una sola cadena
 
     }
 
@@ -311,6 +310,3 @@ function llenarGenero() {
 
     }
 
-
-    
-});

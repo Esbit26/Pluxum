@@ -9,7 +9,7 @@
 
 <body>
     <!-- INICIO CONEXION -->
-    <?php
+<?php
 session_start();
 include("db_connection.php");
 
@@ -28,9 +28,9 @@ if (isset($_SESSION['user_idunsp'])) {
     if ($row['count'] <= 0) {
         echo '<div class="centered-button">
                 <button id="verificar-btn" onclick="transferirUsuario()">Añade tu información financiera</button>
-              </div>';
+                              </div>';
     } else {
-        $getUserDetailsQuery = "SELECT user_idsp,user_addresssp, user_typeaccsp, user_accountsp, user_banksp, user_walletsp FROM users_verified WHERE user_idunsp = ?";
+        $getUserDetailsQuery = "SELECT * FROM users_verified WHERE user_idunsp = ?";
         $getUserDetailsStmt = $conn->prepare($getUserDetailsQuery);
         $getUserDetailsStmt->bind_param("i", $user_idunsp);
         $getUserDetailsStmt->execute();
@@ -38,28 +38,62 @@ if (isset($_SESSION['user_idunsp'])) {
         $userDetailsRow = $userDetailsResult->fetch_assoc();
 
         // Asignar los valores a las variables correspondientes
-        $cedula = $userDetailsRow["user_idsp"];
+        $cedula = $userDetailsRow["user_idunsp"];
         $direccion = $userDetailsRow["user_addresssp"];
         $tipoCuenta = $userDetailsRow["user_typeaccsp"];
         $cuentaBancaria = $userDetailsRow["user_accountsp"];
         $banco = $userDetailsRow["user_banksp"];
+        $swift = $userDetailsRow["user_swiftsp"];
         $walletCripto = $userDetailsRow["user_walletsp"];
         
         echo '
         <section id="informacion-personal">
-            <h2 class="center-text">Informacion financiera</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <label for="nombre">Nombre:</label>
-                    <span id="nombreSpan">' . $nombre . '</span>
-                    <input type="text" id="nombreInput" class="input-edit" style="display:none">
-                </div>
-                
-                <button id="editardat-btn" onclick="habilitarDatos()">Editar</button>
-                <button id="guardardat-btn" style="display: none;" onclick="guardarDatos()">Guardar</button>
-            </div>
-        </section>';
+                                <h2 class="center-text">Informacion financiera</h2>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <label for="nombre">Numero de identificación:</label>
+                                        <span id="nombreSpan">' . $cedula . '</span>
+                                        <input type="text" id="nombreInput" class="input-edit" style="display:none">
+                                    </div>
+                                    <div class="info-item">
+                                    <label for="nombre">Dirección:</label>
+                                    <span id="nombreSpan">' . $direccion . '</span>
+                                    <input type="text" id="nombreInput" class="input-edit" style="display:none">
+                                </div>
+                                <div class="info-item">
+                                <label for="nombre">Tipo de cuenta:</label>
+                                <span id="nombreSpan">' . $tipoCuenta . '</span>
+                                <input type="text" id="nombreInput" class="input-edit" style="display:none">
+                                </div>
 
+                                <div class="info-item">
+                                <label for="nombre">Numero de Cuenta:</label>
+                                <span id="nombreSpan">' . $cuentaBancaria . '</span>
+                                <input type="text" id="nombreInput" class="input-edit" style="display:none">
+                                </div>
+
+                                <div class="info-item">
+                                <label for="nombre">Nombre del banco:</label>
+                                <span id="nombreSpan">' . $banco . '</span>
+                                <input type="text" id="nombreInput" class="input-edit" style="display:none">
+                                </div>
+
+                                <div class="info-item">
+                                <label for="nombre">Codigo SWIFT:</label>
+                                <span id="nombreSpan">' . $swift . '</span>
+                                <input type="text" id="nombreInput" class="input-edit" style="display:none">
+                                </div>
+
+                                <div class="info-item">
+                                <label for="nombre">Wallet USDT (TRC20):</label>
+                                <span id="nombreSpan">' . $walletCripto . '</span>
+                                <input type="text" id="nombreInput" class="input-edit" style="display:none">
+                                </div>
+                                    
+                                    <button id="editardat-btn" onclick="habilitarDatos()">Editar</button>
+                                    <button id="guardardat-btn" style="display: none;" onclick="guardarDatos()">Guardar</button>
+                                </div>
+                              </section>';
     }
 } else {
     echo "Usuario no autenticado.";
